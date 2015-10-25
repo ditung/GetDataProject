@@ -133,8 +133,7 @@ subject train,
 y_train,
 x_train
 
-were combined into the final dataset 'meansa.txt' using the Run_Analysis.R script. A unique ID 'ID' was created the link the records from each separate file.
-The test and train datasets were re-combined, so that all 30 subjects' data is combined in the resulting dataset. The measurements on the mean and standard deviation for each measurement were extracted and the other variables were dropped. The mean of those variables were then calculated across each subject and their activity.
+were combined into the final dataset 'meansa.txt' using the Run_Analysis.R script. A unique ID 'ID' was created the link the records from each separate file. The test and train datasets were re-combined, so that all 30 subjects' data is combined in the resulting dataset. The measurements on the mean and standard deviation for each measurement were extracted and the other variables were dropped. The mean of those variables were then calculated across each subject and their activity.
 
 
 
