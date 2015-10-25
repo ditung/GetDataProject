@@ -2,14 +2,14 @@
 ## Objectives 1-4
 
 ## Read in data from files, adding in column names when necessary
-subject_test <- read.table(".test/subject_test.txt",col.names = "subject_id")
-test_activity <- read.table(".test/y_test.txt",col.names = "activity_id")
+subject_test <- read.table("./test/subject_test.txt",col.names = "subject_id")
+test_activity <- read.table("./test/y_test.txt",col.names = "activity_id")
 
 subject_train <- read.table("./train/subject_train.txt",col.names = "subject_id")
 train_activity <- read.table("./train/y_train.txt",col.names = "activity_id")
 
-activity_label <- read.table(".activity_labels.txt",col.names = c("activity_id", "activity"))
-features <- read.table(".features.txt")
+activity_label <- read.table("activity_labels.txt",col.names = c("activity_id", "activity"))
+features <- read.table("features.txt")
 
 ## Read in train and test datasets using features dataset to name columns
 train <- read.table("./train/x_train.txt",col.names = features[,2])
@@ -40,12 +40,9 @@ library(dplyr)
 dfList = list(subject,activity,activity_label,testtrain)
 mergedData <- join_all(dfList)
 
-## Extract means and standard deviations for measurement variables
-Means <- apply(mergedData[,5:565] ,2, mean)
-StDev <- apply(mergedData[,5:565] ,2, sd)
-
-measures <- rbind(Means, StDev)
-
+## Extract only the measurements on the mean and standard deviation for each measurement. 
+mean_std <- c(1:10,45:50,85:90,125:130,165:170,205:206,244:245,270:275,349:354,428:433,507:508)
+mergedData <- mergedData[,mean_std]
 
 
 ## Objective 5
@@ -58,11 +55,11 @@ temp <- unique(cbind(subject_id = mergedData$subject_id, activity_id = mergedDat
 temp <- arrange(data.frame(temp), s_a)
 
 ## Initialize mean matrix       
-meanS_A <- matrix(nrow = 561,ncol = 180)
+meanS_A <- matrix(nrow = 54,ncol = 180)
 
 
 ## Calculate measurement means over subject/activity interaction variable              
-for(i in 5:565) { 
+for(i in 5:58) { 
         meanS_A[i-4,] <- tapply(mergedData[,i], mergedData$s_a, mean)
 }
 
@@ -70,10 +67,11 @@ for(i in 5:565) {
 meanS_A <- t(meanS_A)
 
 ## Re-name Columns
-colnames(meanS_A) <- features[,2]
+r <- c(1:6,41:46,81:86,121:126,161:166,201:202,240:241,266:271,345:350,424:429,503:504)
+colnames(meanS_A) <- features[r,2]
 meanS_A = cbind(temp, data.frame(meanS_A))
+meanS_A <- arrange(meanS_A, activity_id)
 
 ## Write table containing means for subject activities to 'meansa.txt'
 write.table(meanS_A, file = "meansa.txt", row.names = FALSE)
-
 
