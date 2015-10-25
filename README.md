@@ -20,7 +20,7 @@ y_train
 x_train
 
 It then creates a unique ID 'ID' across the tables generated from the files in the test and train directory. 
-Next, it combines the test and train datasets and merges the activity and subject data with the measurement data into one dataset.
+Next, it combines the test and train datasets and merges the activity and subject data with the measurement data into one dataset (called mergedData).
 Then, it outputs the means and standard deviations for the measurement variables across one dataset into a 'measures' data frame.
 Finally, it creates a subject and activity interaction variable, which it will use to calculate the means of the measurement variable across each subject and activity group (this step requires some workaround procedures, like creating a temporary table, transposing the resulting matrix and re-naming the columns in the resulting matrix).
 
